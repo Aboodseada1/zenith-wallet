@@ -2,7 +2,7 @@
 
 ![Zenith Wallet Banner](./banner-final.png)
 
-A sleek, ultra-modern personal finance and digital wallet Progressive Web Application (PWA). Designed specifically as a mobile web app for effortless expense tracking and seamless secure payments directly from the browser.
+A sleek, ultra-modern personal finance and digital wallet Progressive Web Application (PWA). Designed specifically as a mobile web app for effortless expense and payment tracking directly from the browser.
 
 ## Core Features
 - **Intuitive Dashboard:** Real-time balance tracking with fluid, responsive animations.
