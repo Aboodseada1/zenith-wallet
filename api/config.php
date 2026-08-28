@@ -1,7 +1,7 @@
 <?php
 // Database configuration
-define('DB_HOST', 'db.scorpion.codes');
-define('DB_PORT', '5432');
+define('DB_HOST', '127.0.0.1');
+define('DB_PORT', '5434');
 define('DB_NAME', 'wallet_scorpion');
 define('DB_USER', 'lobster');
 define('DB_PASS', '26843545');

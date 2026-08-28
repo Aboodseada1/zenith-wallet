@@ -842,7 +842,7 @@
             </div>
             <div class="header-right">
                 <div class="date-display" id="currentDate"></div>
-                <button class="logout-btn" id="logoutBtn" title="Logout">
+                <button class="logout-btn" id="logoutBtn" title="Logout" style="display: none;">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
@@ -998,15 +998,21 @@
 
         // API helpers - credentials:include sends cookies automatically
         async function api(endpoint, data = null) {
-            const options = {
-                method: data ? 'POST' : 'GET',
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'include' // This sends the HTTP-only cookie
-            };
-            if (data) options.body = JSON.stringify(data);
-
-            const response = await fetch(`/api/${endpoint}.php`, options);
-            return response.json();
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    if (endpoint === 'login' || endpoint === 'register') {
+                        resolve({ success: true, user: { username: data.username }, wallet: { balance: 0, currency: 'USD', transactions: [] } });
+                    } else if (endpoint === 'session') {
+                        resolve({ success: true, authenticated: true, user: { username: "Demo User" }, wallet: { balance: 0.00, currency: 'USD', transactions: [] } });
+                    } else if (endpoint === 'currency') {
+                        resolve({ success: true, currency: data.currency, balance: balance });
+                    } else if (endpoint === 'sync') {
+                        resolve({ success: true, new_balance: balance });
+                    } else {
+                        resolve({ success: true });
+                    }
+                }, 100);
+            });
         }
 
         // Format currency
@@ -1330,9 +1336,13 @@
             closeModal();
         }
 
-        // Clear history - disabled for now since we're using proper database
+        // Clear history for demo mode
         function clearHistory() {
-            showToast('History is stored permanently');
+            transactions = [];
+            balance = 0;
+            updateBalanceDisplay();
+            renderHistory();
+            showToast('Wallet reset to fresh state');
         }
 
         // Event Listeners
